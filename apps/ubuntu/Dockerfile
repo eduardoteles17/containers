@@ -4,7 +4,7 @@ FROM docker.io/ubuntu:$BASE_VERSION
 
 ARG BASE_VERSION
 
-LABEL org.opencontainers.image.base.name="ghcr.io/eduardoteles17/containers/ubuntu:$BASE_VERSION"
+LABEL org.opencontainers.image.base.name="ghcr.io/eduardoteles17/ubuntu:$BASE_VERSION"
 LABEL org.opencontainers.image.documentation="https://github.com/eduardoteles17/containers/tree/main/apps/ubuntu/README.md"
 LABEL org.opencontainers.image.source="https://github.com/eduardoteles17/containers/tree/main/apps/ubuntu"
 LABEL org.opencontainers.image.title="ubuntu"

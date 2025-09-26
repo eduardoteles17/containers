@@ -3,7 +3,7 @@ variable "BASE_VERSION" {
 }
 
 variable "REGISTRY" {
-  default = "ghcr.io/eduardoteles17/containers"
+  default = "ghcr.io/eduardoteles17"
 }
 
 function "tag" {
