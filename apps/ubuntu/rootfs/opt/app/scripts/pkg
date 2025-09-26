@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+# Define as opções de execução do script
+set -o errexit
+set -o nounset
+set -o pipefail
+
+export DEBIAN_FRONTEND=noninteractive
+
+CLI_NAME="pkg"
+
+usage() {
+  echo "Uso: $CLI_NAME <comando> [args]"
+  echo
+  echo "Comandos disponíveis:"
+  echo "  install [pacotes]     Instala os pacotes informados"
+  echo "  uninstall [pacotes]   Remove os pacotes informados"
+  echo
+}
+
+if [ $# -eq 0 ]; then
+  usage
+  exit 1
+fi
+
+cmd="$1"
+shift
+
+cleanCache() {
+  apt-get clean
+  rm -rf  /var/lib/apt/lists /var/cache/apt/archives
+}
+
+installPackages() {
+  # Atualiza os repositórios e instala os pacotes
+  apt-get update
+  apt-get install -y --no-install-recommends "$@"
+
+  cleanCache
+}
+
+uninstallPackages() {
+  # Remove os pacotes instalados
+  apt-get autoremove --purge -y "$@"
+
+  cleanCache
+}
+
+case "$cmd" in
+  install)
+    installPackages $@
+  ;;
+  uninstall)
+    uninstallPackages $@
+  ;;
+  *)
+    echo "Comando desconhecido: $cmd"
+    usage
+    exit 1
+  ;;
+esac
