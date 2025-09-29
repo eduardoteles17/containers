@@ -22,5 +22,6 @@ ENV MISE_CACHE_DIR="$MISE_BASE_DIR/cache"
 ENV MISE_INSTALL_PATH="$MISE_BASE_DIR/bin/mise"
 ENV PATH="$MISE_BASE_DIR/shims:$MISE_BASE_DIR/bin:$PATH"
 
-RUN pkg install curl git ca-certificates build-essential && \
-    curl https://mise.run | sh
+RUN pkg install curl git ca-certificates && \
+    curl https://mise.run | sh && \
+    pkg clean

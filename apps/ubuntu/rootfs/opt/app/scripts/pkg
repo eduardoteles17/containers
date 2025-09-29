@@ -15,6 +15,7 @@ usage() {
   echo "Comandos disponíveis:"
   echo "  install [pacotes]     Instala os pacotes informados"
   echo "  uninstall [pacotes]   Remove os pacotes informados"
+  echo "  clean                 Remove os caches"
   echo
 }
 
@@ -28,10 +29,15 @@ shift
 
 cleanCache() {
   apt-get clean
-  rm -rf  /var/lib/apt/lists /var/cache/apt/archives
+  rm -rf  /var/lib/apt/lists /var/cache/apt/archives /opt/mise/{cache,downloads}
 }
 
 installPackages() {
+  if [ -f mise.toml ]; then
+    mise install
+    mise reshim
+  fi
+
   # Atualiza os repositórios e instala os pacotes
   apt-get update
   apt-get install -y --no-install-recommends "$@"
@@ -52,6 +58,9 @@ case "$cmd" in
   ;;
   uninstall)
     uninstallPackages $@
+  ;;
+  clean)
+    cleanCache
   ;;
   *)
     echo "Comando desconhecido: $cmd"
